@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ucsg.api.intranet.model.ContactoDTO;
 import com.ucsg.api.intranet.model.DirectorioPersona;
@@ -103,6 +104,26 @@ public class DirectorioService {
     // )).collect(Collectors.toList());
     // }
 
+
+    private String procesarFoto(Object fotoObj) {
+        if (fotoObj == null) return null;
+        try {
+            if (fotoObj instanceof byte[]) {
+                return java.util.Base64.getEncoder().encodeToString((byte[]) fotoObj);
+            } else if (fotoObj instanceof java.sql.Blob) {
+                java.sql.Blob blob = (java.sql.Blob) fotoObj;
+                byte[] bytes = blob.getBytes(1, (int) blob.length());
+                return java.util.Base64.getEncoder().encodeToString(bytes);
+            } else if (fotoObj instanceof String) {
+                return (String) fotoObj;
+            }
+        } catch (Exception e) {
+            System.err.println("Error procesando foto BLOB: " + e.getMessage());
+        }
+        return null;
+    }
+
+    @Transactional(readOnly = true)
     @Cacheable(value = "contactos", key = "#unidad + '-' + #padre + '-' + #hija")
     public List<ContactoDTO> obtenerContactos(String unidad, String padre, String hija) {
         List<Object[]> resultados;
@@ -131,8 +152,8 @@ public class DirectorioService {
 
         return resultados.stream().map(row -> new ContactoDTO(
             (String) row[0], (String) row[1], (String) row[2], (String) row[3],
-            (String) row[4], (String) row[5], (String) row[6], (String) row[7],
-            (String) row[8], row[9] != null ? ((Number) row[9]).intValue() : null, row[10] != null ? ((Number) row[10]).intValue() : null
+            procesarFoto(row[4]), (String) row[5], (String) row[6], (String) row[7],
+            (String) row[8], (String) row[9], row[10] != null ? ((Number) row[10]).intValue() : null, row[11] != null ? ((Number) row[11]).intValue() : null
         )).collect(Collectors.toList());
 }
 }

@@ -5,6 +5,7 @@ public class ContactoDTO {
     private String tituloProfesional;
     private String apellidos;
     private String nombres;
+    private String foto;
     private String subunidadPadre;
     private String subunidad;
     private String cargo;
@@ -15,12 +16,13 @@ public class ContactoDTO {
 
     // Constructor, Getters y Setters
     public ContactoDTO(String extension, String tituloProfesional, String apellidos, 
-                       String nombres, String subunidadPadre, String subunidad, 
+                       String nombres, String foto, String subunidadPadre, String subunidad, 
                        String cargo, String correo, String empleado, Integer ordenSubunidad, Integer codSubunidad) {
         this.extension = extension;
         this.tituloProfesional = tituloProfesional;
         this.apellidos = apellidos;
         this.nombres = nombres;
+        this.foto = foto;
         this.subunidadPadre = subunidadPadre;
         this.subunidad = subunidad;
         this.cargo = cargo;
@@ -61,6 +63,14 @@ public class ContactoDTO {
 
     public void setNombres(String nombres) {
         this.nombres = nombres;
+    }
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
     }
 
     public String getSubunidadPadre() {
