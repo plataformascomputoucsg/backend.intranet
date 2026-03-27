@@ -15,4 +15,7 @@ public interface ComunicacionesRepository extends JpaRepository<Comunicaciones, 
                    "FROM CCE_VW_COMUNICACIONES " +
                    "WHERE TIPO_EVENTO = ?1 AND SECCION = ?2 AND TIP_SITIO = ?3 ORDER BY INDICE", nativeQuery = true)
     List<Comunicaciones> findComunicacionesEspecificas(Integer tipoEvento, Integer seccion, Integer tipSitio);
+
+    @Query(value = "SELECT DIR_IMAGEN FROM CCE_VW_DETALLE_NOTICIAS WHERE COD_EMPRESA = 1 AND COD_NOTICIA = ?1", nativeQuery = true)
+    List<String> findDirImagenByCodNoticia(Integer codNoticia);
 }

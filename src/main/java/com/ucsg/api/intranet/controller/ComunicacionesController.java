@@ -27,4 +27,11 @@ public class ComunicacionesController {
         List<Comunicaciones> comunicaciones = service.getComunicacionesEspecificas(tipoEvento, seccion, tipSitio);
         return ResponseEntity.ok(comunicaciones);
     }
+
+    @GetMapping("/imagen")
+    public ResponseEntity<java.util.Map<String, List<String>>> getDirImagen(
+            @RequestParam("codNoticia") Integer codNoticia) {
+        List<String> dirImagenes = service.getDirImagenByCodNoticia(codNoticia);
+        return ResponseEntity.ok(java.util.Collections.singletonMap("dirImagenes", dirImagenes));
+    }
 }

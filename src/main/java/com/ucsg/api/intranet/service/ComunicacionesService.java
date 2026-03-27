@@ -17,4 +17,8 @@ public class ComunicacionesService {
     public List<Comunicaciones> getComunicacionesEspecificas(Integer tipoEvento, Integer seccion, Integer tipSitio) {
         return repository.findComunicacionesEspecificas(tipoEvento, seccion, tipSitio);
     }
+
+    public List<String> getDirImagenByCodNoticia(Integer codNoticia) {
+        return repository.findDirImagenByCodNoticia(codNoticia);
+    }
 }
