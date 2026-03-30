@@ -21,6 +21,9 @@ public class CumpleanioMes {
     @Column(name = "MES")
     private String mes;
 
+    @Column(name = "CORREO")
+    private String correo;
+
     public CumpleanioMes() {}
 
     public String getNombre() {
@@ -45,5 +48,13 @@ public class CumpleanioMes {
 
     public void setMes(String mes) {
         this.mes = mes;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
     }
 }
